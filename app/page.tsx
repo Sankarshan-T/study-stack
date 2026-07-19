@@ -1,16 +1,32 @@
 import { Button } from "@/components/base/buttons/button";
+import { SignInButton, UserButton } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 
-export default function Home() {
+export default async function Home() {
+  const { userId } = await auth();
+
   return (
     <main className="p-7">
       <div className="p-20 space-y-1">
+        <header className="fixed top-5 right-5 mb-4 flex justify-end">
+          {!userId ? (
+            <div className="flex items-center gap-2">
+              <Button color="link-color">
+                <SignInButton />
+              </Button>
+            </div>
+          ) : (
+            <UserButton />
+          )}
+        </header>
+
         <h1 className="text-7xl font-bold uppercase tracking-wide text-brand-900"> Study Stack</h1>
         <h3 className="text-lg max-w-[70%] font-mono tracking-widest text-brand-900">
           A great option for tracking your students' work. Assign tasks to your students with ease!
         </h3>
         <a href="/dashboard">
           <Button className="mt-4">
-            Open dashboard
+            {!userId ? "Login" : "Open Dashboard"}
           </Button>
         </a>
       </div>
