@@ -74,7 +74,7 @@ export const styles = sortCx({
             root: [
                 "text-tertiary hover:bg-primary_hover hover:text-tertiary_hover data-loading:bg-primary_hover",
                 // Icon styles
-                "*:data-icon:text-fg-quaternary hover:*:data-icon:text-fg-quaternary_hover",
+                "*:data-icon:text-current hover:*:data-icon:text-fg-current/70",
             ].join(" "),
         },
         "link-color": {
