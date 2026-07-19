@@ -3,13 +3,18 @@ import { Button } from "@/components/base/buttons/button";
 export default function Home() {
   return (
     <main className="h-screen w-full bg-brand-100 bg-[linear-gradient(to_right,#7f56d91f_1px,transparent_1px),linear-gradient(to_bottom,#7f56d91f_1px,transparent_1px)] bg-size-[40px_40px] flex flex-col p-7 ">
-      <div className="p-5 space-y-1">
+      <div className="p-20 space-y-1">
         <h1 className="text-7xl font-bold uppercase tracking-wide text-brand-900"> Study Stack</h1>
         <h3 className="text-xl font-mono tracking-widest text-brand-900">
           A great option for tracking your students' work
         </h3>
+        <a href="/dashboard">
+          <Button className="mt-4">
+            Open dashboard
+          </Button>
+        </a>
       </div>
-      <img src="/books-dark.svg" alt="" className="absolute right-[6%] top-[15%] h-100 w-100 object-contain" />
+      <img src="/books-dark.svg" alt="" className="absolute right-[6%] top-[25%] h-100 w-100 object-contain pointer-events-none" />
     </main>
   );
 }
