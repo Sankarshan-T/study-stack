@@ -98,7 +98,7 @@ export function Sidebar({
                     </h1>
                 </div>
 
-                <OrganizationSwitcher />
+                <OrganizationSwitcher hidePersonal />
 
                 <nav className="flex flex-col gap-1">
                     {links.map((link) => {
