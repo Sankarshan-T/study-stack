@@ -1,17 +1,22 @@
+import { StudentDashboard } from "@/app/dashboard/_components/student-dashboard";
+import { TeacherDashboard } from "@/app/dashboard/_components/teacher-dashboard";
 import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
 
 export default async function Dashboard() {
-    const { userId } = await auth();
+    const { orgId, orgRole } = await auth();
 
-    if (!userId) {
-        redirect("/sign-in");
+    if (!orgId) {
+        return (
+            <div>
+                <h1>No classroom selected</h1>
+                <p>Create or select an organization first.</p>
+            </div>
+        );
     }
 
-    return (
-        <main className=" p-8">
-            <h1 className="text-2xl font-semibold text-brand-900">Dashboard</h1>
-            <p className="mt-2 text-brand-700">You can only see this page when you are signed in.</p>
-        </main>
-    );
+    if (orgRole === "org:admin") {
+        return <TeacherDashboard />;
+    }
+    else
+        return <StudentDashboard />;
 }
