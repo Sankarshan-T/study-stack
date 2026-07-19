@@ -1,5 +1,5 @@
 import { Button } from "@/components/base/buttons/button";
-import { SignInButton, UserButton } from "@clerk/nextjs";
+import { SignIn, SignInButton, UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 
 export default async function Home() {
@@ -7,13 +7,15 @@ export default async function Home() {
 
   return (
     <main className="p-7">
-      <div className="p-20 space-y-1">
-        <header className="fixed top-5 right-5 mb-4 flex justify-end">
+      <div className="p-25 space-y-1">
+        <header className="flex justify-end">
           {!userId ? (
             <div className="flex items-center gap-2">
-              <Button color="link-color">
-                <SignInButton />
-              </Button>
+              <SignInButton mode="modal">
+                <Button color="link-color" size="lg">
+                  Sign In
+                </Button>
+              </SignInButton>
             </div>
           ) : (
             <UserButton />
@@ -30,8 +32,8 @@ export default async function Home() {
           </Button>
         </a>
       </div>
-      <img src="/books-dark.svg" alt="" className="absolute right-[6%] top-[25%] h-100 w-100 object-contain pointer-events-none" />
-      <img src="/clipboard.svg" alt="" className="absolute left-[10%] bottom-[10%] opacity-75 -rotate-20 h-50 w-50 object-contain pointer-events-none" />
+      <img src="/books-dark.svg" alt="" className="absolute right-[10%] top-[30%] h-100 w-100 object-contain pointer-events-none" />
+      <img src="/clipboard.svg" alt="" className="absolute left-[20%] bottom-[20%] opacity-75 -rotate-20 h-50 w-50 object-contain pointer-events-none" />
     </main>
   );
 }
