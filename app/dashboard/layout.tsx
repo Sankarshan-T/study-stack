@@ -1,5 +1,5 @@
 import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
-import { currentUser } from "@clerk/nextjs/server";
+import { currentUser, auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -14,6 +14,12 @@ export default async function DashLayout({
 
     if (!user) {
         redirect("/sign-in");
+    }
+
+    const { orgId } = await auth();
+
+    if (!orgId) {
+        redirect("/onboarding");
     }
 
     return (
@@ -32,7 +38,7 @@ export default async function DashLayout({
                             </h1>
                         </div>
 
-                        <OrganizationSwitcher />
+                        <OrganizationSwitcher hidePersonal />
                     </div>
 
                     <div className="mt-auto flex items-center gap-3 pt-4">
