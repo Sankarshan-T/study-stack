@@ -1,3 +1,5 @@
+/* Auto added by Untitled UI THIS IS NOT AI */
+
 @theme {
     /* FONT FAMILY */
     --font-body: var(--font-inter, "Inter"), -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
@@ -95,16 +97,19 @@
         0% {
             transform: translateX(0);
         }
+
         100% {
             transform: translateX(-100%);
         }
     }
 
     @keyframes caret-blink {
+
         0%,
         50% {
             opacity: 1;
         }
+
         51%,
         100% {
             opacity: 0;
