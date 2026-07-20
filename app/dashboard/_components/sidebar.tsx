@@ -1,6 +1,7 @@
 "use client";
 
 import {
+    OrganizationProfile,
     OrganizationSwitcher,
     UserButton,
 } from "@clerk/nextjs";
@@ -16,6 +17,9 @@ import {
     LucideIcon,
 } from "lucide-react";
 import { cx } from "@/utils/cx";
+import { useState } from "react";
+import { Dialog, Modal } from "@/components/application/modals/modal";
+import { OrganizationProfileDialog } from "@/components/orgnizationProfile-dialog";
 
 interface SidebarProps {
     fullName: string | null;
@@ -43,12 +47,7 @@ const teacherLinks: SidebarLink[] = [
         title: "Students",
         href: "/dashboard/students",
         icon: Users,
-    },
-    {
-        title: "Settings",
-        href: "/dashboard/settings",
-        icon: Settings,
-    },
+    }
 ];
 
 const studentLinks: SidebarLink[] = [
@@ -81,6 +80,8 @@ export function Sidebar({
     const links = isTeacher
         ? teacherLinks
         : studentLinks;
+
+    const [settingsOpen, setSettingsOpen] = useState(false);
 
     return (
         <aside className="w-72 shrink-0 h-full border-r border-brand-800 p-4 flex flex-col">
@@ -128,6 +129,19 @@ export function Sidebar({
                             </Button>
                         );
                     })}
+                    <Button
+                        color="tertiary"
+                        size="xl"
+                        iconLeading={Settings}
+                        onPress={() => setSettingsOpen(true)}
+                        className="w-full justify-start rounded-xl px-3 py-3 text-brand-700 hover:bg-brand-300/20"
+                    >
+                        Settings
+                    </Button>
+                    <OrganizationProfileDialog
+                        isOpen={settingsOpen}
+                        onOpenChange={() => setSettingsOpen}
+                    />
                 </nav>
             </div>
 
@@ -146,6 +160,7 @@ export function Sidebar({
                     </p>
                 </div>
             </div>
+
         </aside>
     );
 }
