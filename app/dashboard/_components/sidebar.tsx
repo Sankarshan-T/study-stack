@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { OrgSettings } from "@/components/OrgSettings";
 
 interface SidebarProps {
     fullName: string | null;
@@ -78,7 +79,8 @@ export function Sidebar({
         ? teacherLinks
         : studentLinks;
 
-    const [settingsOpen, setSettingsOpen] = useState(false);
+    const [settingsOpen, setSettingsOpen] =
+        useState(false);
 
     return (
         <aside className="w-72 shrink-0 h-full border-r border-chart-5 p-4 flex flex-col">
@@ -124,15 +126,7 @@ export function Sidebar({
                             </a>
                         );
                     })}
-                    <Button
-                        variant="ghost"
-                        size="lg"
-                        // onClick={() => setSettingsOpen(true)}
-                        className="w-full justify-start rounded-xl px-3 py-3 text-primary hover:bg-purple-300/20"
-                    >
-                        <Settings />
-                        Settings
-                    </Button>
+                    <OrgSettings />
                 </nav>
             </div>
 
