@@ -42,8 +42,8 @@ const teacherLinks: SidebarLink[] = [
         icon: BookOpen,
     },
     {
-        title: "Students",
-        href: "/dashboard/students",
+        title: "Members",
+        href: "/dashboard/members",
         icon: Users,
     }
 ];
@@ -83,7 +83,7 @@ export function Sidebar({
         useState(false);
 
     return (
-        <aside className="w-72 shrink-0 h-full border-r border-chart-5 p-4 flex flex-col">
+        <aside className="w-1/4 shrink-0 h-full border-r border-chart-5 p-4 flex flex-col">
             <div className="space-y-6">
                 <div className="flex items-center gap-4 select-none">
                     <Image
@@ -104,10 +104,7 @@ export function Sidebar({
                     {links.map((link) => {
                         const isActive =
                             pathname ===
-                            link.href ||
-                            pathname.startsWith(
-                                `${link.href}/`
-                            );
+                            link.href
 
                         return (
                             <a key={link.href} href={link.href}>
