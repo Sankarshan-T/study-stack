@@ -1,5 +1,5 @@
 import { StudentDashboard } from "@/app/dashboard/_components/student-dashboard";
-import { TeacherDashboard } from "@/app/dashboard/_components/teacher-dashboard";
+import TeacherDashboard from "@/app/dashboard/_components/teacher-dashboard";
 import { auth } from "@clerk/nextjs/server";
 
 export default async function Dashboard() {

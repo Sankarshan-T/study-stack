@@ -79,8 +79,7 @@ export function Sidebar({
         ? teacherLinks
         : studentLinks;
 
-    const [settingsOpen, setSettingsOpen] =
-        useState(false);
+
 
     return (
         <aside className="w-1/4 shrink-0 h-full border-r border-chart-5 p-4 flex flex-col">
@@ -105,6 +104,9 @@ export function Sidebar({
                         const isActive =
                             pathname ===
                             link.href
+                            || pathname.startsWith(
+                                `${link.href}/`
+                            );
 
                         return (
                             <a key={link.href} href={link.href}>

@@ -18,7 +18,7 @@ export default async function StudentsPage() {
     return (
         <div className="p-3 h-full w-full space-y-2">
             <h1 className="text-2xl text-primary font-semibold">Members:</h1>
-            <div className="grid grid-cols-4">
+            <div className="grid grid-cols-4 gap-2">
                 {members.data.map((member) => (
                     <div
                         key={member.id}
