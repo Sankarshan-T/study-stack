@@ -1,12 +1,11 @@
 "use client";
 
 import {
-    OrganizationProfile,
     OrganizationSwitcher,
     UserButton,
 } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
-import { Button } from "@/components/base/buttons/button";
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import {
     LayoutDashboard,
@@ -16,10 +15,8 @@ import {
     CircleCheck,
     LucideIcon,
 } from "lucide-react";
-import { cx } from "@/utils/cx";
+import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { Dialog, Modal } from "@/components/application/modals/modal";
-import { OrganizationProfileDialog } from "@/components/orgnizationProfile-dialog";
 
 interface SidebarProps {
     fullName: string | null;
@@ -84,7 +81,7 @@ export function Sidebar({
     const [settingsOpen, setSettingsOpen] = useState(false);
 
     return (
-        <aside className="w-72 shrink-0 h-full border-r border-brand-800 p-4 flex flex-col">
+        <aside className="w-72 shrink-0 h-full border-r border-chart-5 p-4 flex flex-col">
             <div className="space-y-6">
                 <div className="flex items-center gap-4 select-none">
                     <Image
@@ -94,7 +91,7 @@ export function Sidebar({
                         height={40}
                     />
 
-                    <h1 className="text-2xl font-bold tracking-wide text-brand-900">
+                    <h1 className="text-2xl font-bold tracking-wide text-primary">
                         StudyStack
                     </h1>
                 </div>
@@ -111,49 +108,43 @@ export function Sidebar({
                             );
 
                         return (
-                            <Button
-                                key={link.href}
-                                href={link.href}
-                                color="tertiary"
-                                size="xl"
-                                iconLeading={
-                                    link.icon
-                                }
-                                className={cx(
-                                    "w-full justify-start rounded-xl px-3 py-3 text-brand-700 hover:bg-brand-300/20",
-                                    isActive &&
-                                    "bg-brand-300 text-brand-900"
-                                )}
-                            >
-                                {link.title}
-                            </Button>
+                            <a key={link.href} href={link.href}>
+                                <Button
+                                    variant="ghost"
+                                    size="lg"
+                                    className={cn(
+                                        "w-full justify-start rounded-xl px-3 py-3 text-primary hover:bg-purple-300/20",
+                                        isActive &&
+                                        "bg-purple-300 text-primary"
+                                    )}
+                                >
+                                    <link.icon />
+                                    {link.title}
+                                </Button>
+                            </a>
                         );
                     })}
                     <Button
-                        color="tertiary"
-                        size="xl"
-                        iconLeading={Settings}
-                        onPress={() => setSettingsOpen(true)}
-                        className="w-full justify-start rounded-xl px-3 py-3 text-brand-700 hover:bg-brand-300/20"
+                        variant="ghost"
+                        size="lg"
+                        // onClick={() => setSettingsOpen(true)}
+                        className="w-full justify-start rounded-xl px-3 py-3 text-primary hover:bg-purple-300/20"
                     >
+                        <Settings />
                         Settings
                     </Button>
-                    <OrganizationProfileDialog
-                        isOpen={settingsOpen}
-                        onOpenChange={() => setSettingsOpen}
-                    />
                 </nav>
             </div>
 
-            <div className="mt-auto border-t border-brand-800 pt-4 flex items-center gap-3">
+            <div className="mt-auto border-t border-chart-5 pt-4 flex items-center gap-3">
                 <UserButton />
 
                 <div className="min-w-0">
-                    <p className="truncate font-semibold text-brand-900">
+                    <p className="truncate font-semibold text-primary">
                         {fullName}
                     </p>
 
-                    <p className="text-sm text-brand-700">
+                    <p className="text-sm text-chart-4">
                         {isTeacher
                             ? "Teacher"
                             : "Student"}

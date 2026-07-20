@@ -1,5 +1,5 @@
-import { Button } from "@/components/base/buttons/button";
-import { SignIn, SignInButton, UserButton } from "@clerk/nextjs";
+import { Button } from "@/components/ui/button";
+import { SignInButton, UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 
 export default async function Home() {
@@ -12,7 +12,7 @@ export default async function Home() {
           {!userId ? (
             <div className="flex items-center gap-2">
               <SignInButton mode="modal">
-                <Button color="link-color" size="lg">
+                <Button variant={'outline'} size="lg">
                   Sign In
                 </Button>
               </SignInButton>
@@ -22,8 +22,8 @@ export default async function Home() {
           )}
         </header>
 
-        <h1 className="text-7xl font-bold uppercase tracking-wide text-brand-900"> Study Stack</h1>
-        <h3 className="text-lg max-w-[70%] font-mono tracking-widest text-brand-900">
+        <h1 className="text-7xl font-bold stroke-primary uppercase tracking-wide text-primary"> Study Stack</h1>
+        <h3 className="text-lg max-w-[70%] font-mono tracking-widest text-primary">
           A great option for tracking your students' work. Assign tasks to your students with ease!
         </h3>
         <a href="/dashboard">

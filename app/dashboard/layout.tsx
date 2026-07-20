@@ -25,7 +25,7 @@ export default async function DashLayout({
 
     return (
         <div className="p-5 h-full">
-            <main className="h-full w-full border border-brand-800 rounded-xl bg-brand-200/40 backdrop-blur-xs p-5 flex gap-x-2 ">
+            <main className="h-full w-full border border-chart-5 rounded-xl bg-purple-200/40 backdrop-blur-xs p-5 flex gap-x-2 ">
                 <Sidebar
                     fullName={user.fullName}
                     role={orgRole || ""}
