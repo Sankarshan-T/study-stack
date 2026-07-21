@@ -40,26 +40,21 @@ export default function NewAssignment() {
 
             return;
         }
-        startTransition(async () => {
-            const promise =
-                createAssignment({
-                    title,
-                    description,
-                    aditionalNotes,
-                    dueDate,
-                });
+        startTransition(() => {
+            const promise = createAssignment({
+                title,
+                description,
+                aditionalNotes,
+                dueDate,
+            }).then(() => {
+                router.push("/dashboard/assignments");
+            });
 
             toast.promise(promise, {
                 loading: "Creating assignment...",
                 success: "Created assignment successfully!",
-                error: "Failed to create assignment",
+                error: "Unable to create assignment",
             });
-
-            await promise;
-
-            router.push(
-                "/dashboard/assignments"
-            );
         });
     }
 
