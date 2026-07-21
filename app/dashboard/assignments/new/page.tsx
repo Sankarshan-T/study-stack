@@ -1,8 +1,68 @@
+"use client";
+
+import createAssignment from "@/app/actions/create-assignments";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import { useState, useTransition } from "react";
+import { toast } from "sonner";
 
 export default function NewAssignment() {
+    const [title, setTitle] =
+        useState("");
+
+    const [description, setDescription] =
+        useState("");
+
+    const [aditionalNotes, setAditionalNotes] =
+        useState("");
+
+    const [dueDate, setDueDate] =
+        useState("");
+
+    const router = useRouter();
+
+    const [pending,
+        startTransition] =
+        useTransition();
+
+    async function handleCreate() {
+        if (
+            !title ||
+            !description ||
+            !dueDate
+        ) {
+            toast.error(
+                "Please fill all required fields."
+            );
+
+            return;
+        }
+        startTransition(async () => {
+            const promise =
+                createAssignment({
+                    title,
+                    description,
+                    aditionalNotes,
+                    dueDate,
+                });
+
+            toast.promise(promise, {
+                loading: "Creating assignment...",
+                success: "Created assignment successfully!",
+                error: "Failed to create assignment",
+            });
+
+            await promise;
+
+            router.push(
+                "/dashboard/assignments"
+            );
+        });
+    }
+
     return (
         <div className="h-full w-full p-3 flex">
             <div
@@ -14,14 +74,22 @@ export default function NewAssignment() {
                         <h2 className="text-sm text-primary font-mono">
                             Title<span className="text-red-500"> *</span>
                         </h2>
-                        <Input required placeholder="Title..." />
+                        <Input
+                            required
+                            placeholder="Title..."
+                            onChange={(e) => setTitle(e.target.value)}
+                        />
                     </div>
                     <div className="flex flex-col gap-y-1">
                         <h2 className="text-sm text-primary font-mono">
                             Due Date
                             <span className="text-red-500"> *</span>
                         </h2>
-                        <Input required type="date" />
+                        <Input
+                            required
+                            type="date"
+                            onChange={(e) => setDueDate(e.target.value)}
+                        />
                     </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
@@ -33,6 +101,7 @@ export default function NewAssignment() {
                             required
                             placeholder="Describe the task..."
                             className="flex-1 resize-none overflow-y-auto wrap-break-word"
+                            onChange={(e) => setDescription(e.target.value)}
                         />
                     </div>
                     <div className="flex flex-col gap-y-1">
@@ -42,12 +111,18 @@ export default function NewAssignment() {
                         <Textarea
                             placeholder="Any other points to say? (optional)"
                             className="flex-1 resize-none overflow-y-auto wrap-break-word"
+                            onChange={(e) => setAditionalNotes(e.target.value)}
                         />
                     </div>
                 </div>
                 <div className="gap-4 flex justify-end w-full">
-                    <Button className="hover:scale-103 transition">
-                        Create
+                    <Button
+                        onClick={handleCreate}
+                        disabled={pending}
+                        className={cn("hover:scale-103 transition", pending && "animate-pulse")}>
+                        {pending
+                            ? "Creating..."
+                            : "Create"}
                     </Button>
                 </div>
             </div>
