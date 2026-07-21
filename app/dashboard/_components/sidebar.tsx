@@ -82,7 +82,7 @@ export function Sidebar({
 
 
     return (
-        <aside className="w-1/4 shrink-0 h-full border-r border-chart-5 p-4 flex flex-col">
+        <aside className="w-1/4 shrink-0 h-full border-r border-primary p-4 flex flex-col">
             <div className="space-y-6">
                 <div className="flex items-center gap-4 select-none">
                     <Image
@@ -129,7 +129,7 @@ export function Sidebar({
                 </nav>
             </div>
 
-            <div className="mt-auto border-t border-chart-5 pt-4 flex items-center gap-3">
+            <div className="mt-auto border-t border-primary pt-4 flex items-center gap-3">
                 <UserButton />
 
                 <div className="min-w-0">

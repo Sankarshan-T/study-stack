@@ -26,7 +26,7 @@ export default async function OnboardingPage() {
                 </div>
 
                 <div className="grid grid-cols-2 gap-8 items-start">
-                    <div className="rounded-2xl border border-chart-5 bg-purple-200/40 p-6 h-[30vh]">
+                    <div className="rounded-2xl border border-primary bg-purple-200/40 p-6 h-[30vh]">
                         <h2 className="text-2xl font-semibold text-primary">
                             Teacher?
                         </h2>
@@ -44,7 +44,7 @@ export default async function OnboardingPage() {
                         </div>
                     </div>
 
-                    <div className="rounded-2xl border border-chart-5 bg-purple-200/40 p-6 h-[30vh]">
+                    <div className="rounded-2xl border border-primary bg-purple-200/40 p-6 h-[30vh]">
                         <h2 className="text-2xl font-semibold text-primary">
                             Student
                         </h2>

@@ -6,7 +6,7 @@ export default function SettingsPage() {
             appearance={{
                 elements: {
                     rootBox: "w-[80%] h-[80%]",
-                    card: "shadow-none border border-chart-5",
+                    card: "shadow-none border border-primary",
                 },
             }}
         />
