@@ -34,6 +34,8 @@ export default async function AssignmentIdPage({
         notFound();
     }
 
+    const role = (await auth()).orgRole == "org:admin" ? "teacher" : "student"
+
     const completions =
         await db.query.assignmentCompletions.findMany({
             where: eq(
@@ -132,131 +134,138 @@ export default async function AssignmentIdPage({
 
             </div>
 
-            <div className="grid grid-cols-3 gap-3">
-                <Card>
-                    <CardHeader className="pb-2">
-                        <CardTitle className="text-sm font-medium text-muted-foreground">
-                            Total Students
-                        </CardTitle>
-                    </CardHeader>
+            {role === "teacher" ? (
+                <div className="w-full h-full space-x-3 space-y-3">
+                    <div className="grid grid-cols-3 gap-3">
+                        <Card>
+                            <CardHeader className="pb-2">
+                                <CardTitle className="text-sm font-medium text-muted-foreground">
+                                    Total Students
+                                </CardTitle>
+                            </CardHeader>
 
-                    <CardContent className="pt-0">
-                        <p className="text-3xl font-bold">
-                            {totalStudents}
-                        </p>
-                    </CardContent>
-                </Card>
+                            <CardContent className="pt-0">
+                                <p className="text-3xl font-bold">
+                                    {totalStudents}
+                                </p>
+                            </CardContent>
+                        </Card>
 
-                <Card>
-                    <CardHeader className="pb-2">
-                        <CardTitle className="text-sm font-medium text-muted-foreground">
-                            Completed
-                        </CardTitle>
-                    </CardHeader>
+                        <Card>
+                            <CardHeader className="pb-2">
+                                <CardTitle className="text-sm font-medium text-muted-foreground">
+                                    Completed
+                                </CardTitle>
+                            </CardHeader>
 
-                    <CardContent className="pt-0">
-                        <p className="text-3xl font-bold text-green-600">
-                            {completedCount}
-                        </p>
-                    </CardContent>
-                </Card>
+                            <CardContent className="pt-0">
+                                <p className="text-3xl font-bold text-green-600">
+                                    {completedCount}
+                                </p>
+                            </CardContent>
+                        </Card>
 
-                <Card>
-                    <CardHeader className="pb-2">
-                        <CardTitle className="text-sm font-medium text-muted-foreground">
-                            Pending
-                        </CardTitle>
-                    </CardHeader>
+                        <Card>
+                            <CardHeader className="pb-2">
+                                <CardTitle className="text-sm font-medium text-muted-foreground">
+                                    Pending
+                                </CardTitle>
+                            </CardHeader>
 
-                    <CardContent className="pt-0">
-                        <p className="text-3xl font-bold text-orange-500">
-                            {pendingCount}
-                        </p>
-                    </CardContent>
-                </Card>
-            </div>
+                            <CardContent className="pt-0">
+                                <p className="text-3xl font-bold text-orange-500">
+                                    {pendingCount}
+                                </p>
+                            </CardContent>
+                        </Card>
+                    </div>
 
-            <Card>
-                <CardHeader>
-                    <CardTitle>
-                        Progress
-                    </CardTitle>
-                </CardHeader>
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>
+                                Progress
+                            </CardTitle>
+                        </CardHeader>
 
-                <CardContent className="space-y-3">
-                    <Progress value={progress} />
+                        <CardContent className="space-y-3">
+                            <Progress value={progress} />
 
-                    <p className="text-sm text-muted-foreground">
-                        {completedCount} students out of {totalStudents} completed
-                    </p>
-                </CardContent>
-            </Card>
+                            <p className="text-sm text-muted-foreground">
+                                {completedCount} students out of {totalStudents} completed
+                            </p>
+                        </CardContent>
+                    </Card>
 
-            <div className="grid lg:grid-cols-2 gap-4">
-                <Card>
-                    <CardHeader>
-                        <CardTitle>
-                            Completed
-                        </CardTitle>
-                    </CardHeader>
+                    <div className="grid lg:grid-cols-2 gap-4">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>
+                                    Completed
+                                </CardTitle>
+                            </CardHeader>
 
-                    <CardContent className="space-y-2">
-                        {completedStudents.map(
-                            (student) => (
-                                <div
-                                    key={
-                                        student.id
-                                    }
-                                    className="flex justify-between items-center rounded-lg border p-3"
-                                >
-                                    <p>
-                                        {
-                                            student.publicUserData?.firstName
-                                        }
-                                    </p>
+                            <CardContent className="space-y-2">
+                                {completedStudents.map(
+                                    (student) => (
+                                        <div
+                                            key={
+                                                student.id
+                                            }
+                                            className="flex justify-between items-center rounded-lg border p-3"
+                                        >
+                                            <p>
+                                                {
+                                                    student.publicUserData?.firstName
+                                                }
+                                            </p>
 
-                                    <Badge>
-                                        Done
-                                    </Badge>
-                                </div>
-                            )
-                        )}
-                    </CardContent>
-                </Card>
+                                            <Badge>
+                                                Done
+                                            </Badge>
+                                        </div>
+                                    )
+                                )}
+                            </CardContent>
+                        </Card>
 
-                <Card>
-                    <CardHeader>
-                        <CardTitle>
-                            Pending
-                        </CardTitle>
-                    </CardHeader>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>
+                                    Pending
+                                </CardTitle>
+                            </CardHeader>
 
-                    <CardContent className="space-y-2">
-                        {pendingStudents.map(
-                            (student) => (
-                                <div
-                                    key={
-                                        student.id
-                                    }
-                                    className="flex justify-between items-center rounded-lg border p-3"
-                                >
-                                    <p>
-                                        {
-                                            student.publicUserData?.firstName
-                                        }
-                                    </p>
+                            <CardContent className="space-y-2">
+                                {pendingStudents.map(
+                                    (student) => (
+                                        <div
+                                            key={
+                                                student.id
+                                            }
+                                            className="flex justify-between items-center rounded-lg border p-3"
+                                        >
+                                            <p>
+                                                {
+                                                    student.publicUserData?.firstName
+                                                }
+                                            </p>
 
-                                    <Badge
-                                        variant="secondary"
-                                    >
-                                        Pending
-                                    </Badge>
-                                </div>
-                            )
-                        )}
-                    </CardContent>
-                </Card>
-            </div>
+                                            <Badge
+                                                variant="secondary"
+                                            >
+                                                Pending
+                                            </Badge>
+                                        </div>
+                                    )
+                                )}
+                            </CardContent>
+                        </Card>
+                    </div>
+                </div>
+            ) : (
+                <p></p>
+            )}
+
         </div>
     )
 }
