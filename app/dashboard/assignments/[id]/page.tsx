@@ -1,3 +1,4 @@
+import { completeAssignment } from "@/app/actions/complete-assignment";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -5,9 +6,10 @@ import { Progress } from "@/components/ui/progress";
 import { db } from "@/db";
 import { assignmentCompletions, assignments } from "@/db/schema";
 import { auth, clerkClient } from "@clerk/nextjs/server";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { MoveLeft } from "lucide-react";
 import { notFound } from "next/navigation";
+import { StudentAssignment } from "../_components/studentAssignment";
 
 interface AssignmentIdPageProps {
     params: Promise<{
@@ -19,7 +21,7 @@ export default async function AssignmentIdPage({
     params,
 }: AssignmentIdPageProps) {
     const { id } = await params;
-    const { orgId } = await auth();
+    const { orgId, userId, orgRole } = await auth();
     const client = await clerkClient();
 
     const assignment =
@@ -34,7 +36,7 @@ export default async function AssignmentIdPage({
         notFound();
     }
 
-    const role = (await auth()).orgRole == "org:admin" ? "teacher" : "student"
+    const role = orgRole == "org:admin" ? "teacher" : "student"
 
     const completions =
         await db.query.assignmentCompletions.findMany({
@@ -42,6 +44,35 @@ export default async function AssignmentIdPage({
                 assignmentCompletions.assignmentId,
                 id
             ),
+        });
+
+    const completion =
+        await db.query.assignmentCompletions.findFirst({
+            where: and(
+                eq(
+                    assignmentCompletions.assignmentId,
+                    id
+                ),
+                eq(
+                    assignmentCompletions.studentId,
+                    userId!
+                )
+            ),
+        });
+
+
+    const alreadyCompleted =
+        await db.query.assignmentCompletions.findFirst({
+            where: and(
+                eq(
+                    assignmentCompletions.assignmentId,
+                    id
+                ),
+                eq(
+                    assignmentCompletions.studentId,
+                    userId!
+                )
+            )
         });
 
     const memberships =
@@ -98,6 +129,8 @@ export default async function AssignmentIdPage({
                 student.publicUserData.userId
             )
         );
+
+
 
     return (
         <div className="h-full w-full max-h-full overflow-auto flex flex-col gap-y-5">
@@ -263,9 +296,21 @@ export default async function AssignmentIdPage({
                     </div>
                 </div>
             ) : (
-                <p></p>
+                <StudentAssignment
+                    assignmentId={id}
+                    completion={
+                        completion
+                            ? {
+                                startTime:
+                                    completion.startTime,
+                                endTime:
+                                    completion.endTime,
+                            }
+                            : null
+                    }
+                />
             )}
 
-        </div>
+        </div >
     )
 }
