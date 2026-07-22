@@ -7,12 +7,14 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function AssignmensPage() {
-    const { orgId } =
+    const { orgId, orgRole } =
         await auth();
 
     if (!orgId) {
         redirect("/onboarding");
     }
+
+    const isTeacher = orgRole === "org:admin";
 
     const data =
         await db.query.assignments.findMany({
@@ -26,13 +28,15 @@ export default async function AssignmensPage() {
         });
 
     return (
-        <div className="h-full w-full p-3">
+        <div className="h-full w-full p-3 flex flex-col gap-y-3">
             <h1 className="text-2xl text-primary font-semibold">Assignments:</h1>
-            <Button asChild>
-                <Link href="/dashboard/assignments/new">
-                    Create Assignment
-                </Link>
-            </Button>
+            {isTeacher &&
+                <Button asChild>
+                    <Link href="/dashboard/assignments/new">
+                        Create Assignment
+                    </Link>
+                </Button>
+            }
             {data.map((assignment) => (
                 <div key={assignment.id}>
                     <p>{assignment.title}</p>
