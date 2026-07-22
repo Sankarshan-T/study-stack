@@ -11,12 +11,9 @@ import {
     LayoutDashboard,
     BookOpen,
     Users,
-    Settings,
-    CircleCheck,
     LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
 import { OrgSettings } from "@/components/OrgSettings";
 
 interface SidebarProps {
@@ -58,11 +55,6 @@ const studentLinks: SidebarLink[] = [
         title: "Assignments",
         href: "/dashboard/assignments",
         icon: BookOpen,
-    },
-    {
-        title: "Grades",
-        href: "/dashboard/grades",
-        icon: CircleCheck,
     },
 ];
 
