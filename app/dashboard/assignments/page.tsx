@@ -37,18 +37,28 @@ export default async function AssignmensPage() {
                     </Link>
                 </Button>
             }
-            {data.map((assignment) => (
-                <div key={assignment.id}>
-                    <p>{assignment.title}</p>
-                    <p>{assignment.id}</p>
-
-                    <Link
-                        href={`/dashboard/assignments/${assignment.id}`}
+            <div className="flex-1 grid grid-cols-3 p-2">
+                {data.map((assignment) => (
+                    <div
+                        key={assignment.id}
+                        className="p-3 rounded-lg bg-card flex flex-col h-fit border border-primary"
                     >
-                        Open
-                    </Link>
-                </div>
-            ))}
+                        <p className="text-lg font-medium text-primary underline">{assignment.title}:</p>
+                        <p className="text-xs font-mono text-chart-5 line-clamp-3">{assignment.description}</p>
+
+                        <a
+                            href={`/dashboard/assignments/${assignment.id}`}
+                        >
+                            <Button
+                                size={"icon"}
+                                className="w-full text-sm font-mono h-fit p-1 mt-4"
+                            >
+                                Open
+                            </Button>
+                        </a>
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }
