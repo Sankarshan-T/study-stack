@@ -60,8 +60,8 @@ body {
 :root {
     --background: oklch(1 0 0);
     --foreground: oklch(0.148 0.004 228.8);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.148 0.004 228.8);
+    --card: oklch(81.014% 0.10563 293.683 / 0.744);
+    --card-foreground: oklch(0.432 0.232 292.759);
     --popover: oklch(1 0 0);
     --popover-foreground: oklch(0.148 0.004 228.8);
     --primary: oklch(36.731% 0.19384 294.927);
@@ -73,9 +73,9 @@ body {
     --accent: oklch(0.963 0.002 197.1);
     --accent-foreground: oklch(0.218 0.008 223.9);
     --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.925 0.005 214.3);
+    --border: oklch(0.432 0.232 292.759);
     --input: oklch(0.925 0.005 214.3);
-    --ring: oklch(0.723 0.014 214.4);
+    --ring: oklch(0.432 0.232 292.759);
     --chart-1: oklch(0.811 0.111 293.571);
     --chart-2: oklch(0.606 0.25 292.717);
     --chart-3: oklch(0.541 0.281 293.009);
