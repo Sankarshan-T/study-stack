@@ -1,11 +1,14 @@
 import { cn } from "@/lib/utils";
 import { auth, clerkClient } from "@clerk/nextjs/server";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
 export default async function StudentsPage() {
-    const { orgId } = await auth();
+    const { orgId, orgRole } = await auth();
 
     if (!orgId) return null;
+
+    if (orgRole !== "org:admin") redirect("/dashboard");
 
     const client = await clerkClient();
 
