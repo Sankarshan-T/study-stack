@@ -10,6 +10,7 @@ import { and, eq } from "drizzle-orm";
 import { MoveLeft } from "lucide-react";
 import { notFound } from "next/navigation";
 import { StudentAssignment } from "../_components/studentAssignment";
+import { DeleteAssignment } from "../_components/deleteAssignment";
 
 interface AssignmentIdPageProps {
     params: Promise<{
@@ -139,6 +140,11 @@ export default async function AssignmentIdPage({
                                     Created: {new Date(assignment.createdAt).toDateString()}
                                 </Badge>
                             </div>
+                            {role === "teacher" && (
+                                <DeleteAssignment
+                                    assignmentId={assignment.id}
+                                />
+                            )}
                         </h1>
 
                         <p className="text-muted-foreground mt-2">

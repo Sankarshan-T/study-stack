@@ -31,10 +31,11 @@ export function DeleteAssignment({
 
     return (
         <Button
-            variant="destructive"
             onClick={handleDelete}
+            size={"sm"}
+            className="p-1 bg-red-800/10 hover:bg-red-800 text-red-800 border border-red-800 hover:text-white"
         >
-            <Trash2 className="mr-2 h-4 w-4" />
+            <Trash2 className="h-4 w-4" />
             Delete
         </Button>
     )
