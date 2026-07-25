@@ -18,7 +18,7 @@ export function DeleteAssignment({
     async function handleDelete() {
         const promise = deletAssignment(assignmentId)
             .then(() => {
-                router.push("/dashboard.assignments");
+                router.push("/dashboard/assignments");
                 router.refresh();
             })
 
