@@ -1,10 +1,27 @@
-import { Button } from "@/components/ui/button";
-import { db } from "@/db";
-import { assignments } from "@/db/schema";
+import Link from "next/link";
+import Image from "next/image";
+
 import { auth, clerkClient } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
-import { NotebookPen, Users, UserStar } from "lucide-react";
-import Image from "next/image";
+
+import { db } from "@/db";
+import { assignments } from "@/db/schema";
+
+import {
+    Users,
+    UserStar,
+    NotebookPen,
+    ArrowRight,
+} from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card";
 
 export default async function TeacherDashboard() {
     const { orgId } = await auth();
@@ -20,18 +37,15 @@ export default async function TeacherDashboard() {
             organizationId: orgId,
         });
 
-    const students =
-        memberships.data.filter(
-            (membership) =>
-                membership.role ===
-                "org:member"
-        );
-    const teachers =
-        memberships.data.filter(
-            (membership) =>
-                membership.role ===
-                "org:admin"
-        );
+    const students = memberships.data.filter(
+        (membership) =>
+            membership.role === "org:member"
+    );
+
+    const teachers = memberships.data.filter(
+        (membership) =>
+            membership.role === "org:admin"
+    );
 
     const assignmentsData =
         await db.query.assignments.findMany({
@@ -39,80 +53,204 @@ export default async function TeacherDashboard() {
                 assignments.orgId,
                 orgId
             ),
+            orderBy: (
+                assignments,
+                { desc }
+            ) => [
+                    desc(assignments.createdAt),
+                ],
         });
 
     const assignmentCount =
         assignmentsData.length;
 
     return (
-        <div className="h-full w-full p-3 flex flex-col gap-2">
-            <h1 className="text-2xl text-primary font-semibold">Hey teacher!</h1>
-            <div className="grid grid-cols-3 gap-3">
-                <div className="rounded-xl p-3 flex items-center gap-x-3 bg-chart-1 border border-primary">
-                    <Users height={30} width={30} className="text-primary" />
-                    <div>
-                        <h2 className="text-lg font-medium text-primary">
-                            {students.length} {students.length === 1 ? "student" : "students"}
-                        </h2>
-                        <h3 className="text-xs font-mono">
-                            {students.length} {students.length === 1 ? "student" : "students"} in your class.
+        <div className="h-full overflow-auto p-4 space-y-6">
+            <div>
+                <h1 className="text-3xl font-bold text-primary">
+                    Hey teacher!
+                </h1>
+
+                <p className="text-muted-foreground mt-1">
+                    Take a look at your classroom
+                </p>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-3">
+                <Card className="bg-chart-1 border-primary">
+                    <CardContent className="p-4">
+                        <div className="flex items-center justify-between">
+                            <Users className="size-8 text-primary" />
+
+                            <h2 className="text-3xl font-bold text-primary">
+                                {students.length}
+                            </h2>
+                        </div>
+
+                        <h3 className="mt-3 font-semibold">
+                            Students
                         </h3>
-                    </div>
-                </div>
-                <div className="rounded-xl p-3 flex items-center gap-x-3 bg-chart-1 border border-primary">
-                    <UserStar height={30} width={30} className="text-primary" />
-                    <div>
-                        <h2 className="text-lg font-medium text-primary">
-                            {teachers.length} {teachers.length === 1 ? "teacher" : "teachers"}
-                        </h2>
-                        <h3 className="text-xs font-mono">
-                            {teachers.length} {teachers.length === 1 ? "teacher" : "teachers"} in your class.
+
+                        <p className="text-sm text-muted-foreground">
+                            Enrolled in this classroom.
+                        </p>
+                    </CardContent>
+                </Card>
+
+                <Card className="bg-chart-1 border-primary">
+                    <CardContent className="p-4">
+                        <div className="flex items-center justify-between">
+                            <UserStar className="size-8 text-primary" />
+
+                            <h2 className="text-3xl font-bold text-primary">
+                                {teachers.length}
+                            </h2>
+                        </div>
+
+                        <h3 className="mt-3 font-semibold">
+                            Teachers
                         </h3>
-                    </div>
-                </div>
-                <div className="rounded-xl p-3 flex items-center gap-x-3 bg-chart-1 border border-primary">
-                    <NotebookPen height={30} width={30} className="text-primary" />
-                    <div>
-                        <h2 className="text-lg font-medium text-primary">
-                            {assignmentCount} {assignmentCount === 1 ? "assignment" : "assignments"}
-                        </h2>
-                        <h3 className="text-xs font-mono">
-                            Total of {assignmentCount} {assignmentCount === 1 ? "assignment" : "assignments"} in your class.
+
+                        <p className="text-sm text-muted-foreground">
+                            Teaching in this classroom.
+                        </p>
+                    </CardContent>
+                </Card>
+
+                <Card className="bg-chart-1 border-primary">
+                    <CardContent className="p-4">
+                        <div className="flex items-center justify-between">
+                            <NotebookPen className="size-8 text-primary" />
+
+                            <h2 className="text-3xl font-bold text-primary">
+                                {assignmentCount}
+                            </h2>
+                        </div>
+
+                        <h3 className="mt-3 font-semibold">
+                            Assignments
                         </h3>
-                    </div>
+
+                        <p className="text-sm text-muted-foreground">
+                            Created for this classroom.
+                        </p>
+                    </CardContent>
+                </Card>
+            </div>
+
+            <div className="space-y-4">
+                <h2 className="text-xl font-semibold">
+                    Quick Actions
+                </h2>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                    <Card className="bg-chart-1 border-primary">
+                        <CardContent className="p-4 flex flex-col items-center text-center gap-3">
+                            <Image
+                                src="/books-dark.svg"
+                                alt="Assignments"
+                                width={140}
+                                height={140}
+                            />
+
+                            <div>
+                                <h3 className="text-xl font-semibold">
+                                    Assignments
+                                </h3>
+
+                                <p className="text-muted-foreground text-sm mt-1">
+                                    Create assignments here.
+                                </p>
+                            </div>
+
+                            <Button asChild>
+                                <Link href="/dashboard/assignments">
+                                    Open Assignments
+                                    <ArrowRight className="ml-2 h-4 w-4" />
+                                </Link>
+                            </Button>
+                        </CardContent>
+                    </Card>
+
+                    <Card className="bg-chart-1 border-primary">
+                        <CardContent className="p-4 flex flex-col items-center text-center gap-3">
+                            <Users className="size-28 text-primary" />
+
+                            <div>
+                                <h3 className="text-xl font-semibold">
+                                    Members
+                                </h3>
+
+                                <p className="text-muted-foreground text-sm mt-1">
+                                    View teachers and students in your classroom.
+                                </p>
+                            </div>
+
+                            <Button asChild>
+                                <Link href="/dashboard/members">
+                                    Open Members
+                                    <ArrowRight className="ml-2 h-4 w-4" />
+                                </Link>
+                            </Button>
+                        </CardContent>
+                    </Card>
                 </div>
             </div>
-            <div className="flex p-5">
-                <div className="flex-1 flex flex-col justify-center items-center">
-                    <Image
-                        src={"/books-dark.svg"}
-                        alt="books"
-                        height={300}
-                        width={300}
-                    />
-                    <a
-                        href={`/dashboard/assignments`}
-                    >
-                        <Button
-                            className="w-full text-lg font-mono"
-                        >
-                            See assignments
-                        </Button>
-                    </a>
-                </div>
-                <div className="flex-1 flex flex-col justify-center items-center">
-                    <Users className="size-70 text-primary" />
-                    <a
-                        href={`/dashboard/members`}
-                    >
-                        <Button
-                            className="w-full text-lg font-mono"
-                        >
-                            See Members
-                        </Button>
-                    </a>
-                </div>
-            </div>
+
+            <Card className="bg-chart-1 border-primary">
+                <CardHeader className="pb-3">
+                    <CardTitle>
+                        Recent Assignments
+                    </CardTitle>
+
+                    <CardDescription>
+                        Your latest assignments.
+                    </CardDescription>
+                </CardHeader>
+
+                <CardContent className="pt-0 p-4">
+                    {assignmentsData.length === 0 ? (
+                        <p className="text-muted-foreground">
+                            No assignments created yet.
+                        </p>
+                    ) : (
+                        <div className="space-y-3">
+                            {assignmentsData
+                                .slice(0, 5)
+                                .map((assignment) => (
+                                    <div
+                                        key={assignment.id}
+                                        className="flex items-center justify-between rounded-lg border px-3 py-2"
+                                    >
+                                        <div>
+                                            <p className="font-medium">
+                                                {assignment.title}
+                                            </p>
+
+                                            <p className="text-sm text-muted-foreground">
+                                                Due{" "}
+                                                {new Date(
+                                                    assignment.dueDate
+                                                ).toLocaleDateString()}
+                                            </p>
+                                        </div>
+
+                                        <Button
+                                            asChild
+                                            variant="outline"
+                                        >
+                                            <Link
+                                                href={`/dashboard/assignments/${assignment.id}`}
+                                            >
+                                                Open
+                                            </Link>
+                                        </Button>
+                                    </div>
+                                ))}
+                        </div>
+                    )}
+                </CardContent>
+            </Card>
         </div>
-    )
+    );
 }
