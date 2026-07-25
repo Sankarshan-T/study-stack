@@ -82,22 +82,36 @@ export default async function TeacherDashboard() {
                     </div>
                 </div>
             </div>
-            <div className="flex-1 flex flex-col justify-center items-center">
-                <Image
-                    src={"/books-dark.svg"}
-                    alt="books"
-                    height={300}
-                    width={300}
-                />
-                <a
-                    href={`/dashboard/assignments`}
-                >
-                    <Button
-                        className="w-full text-lg font-mono"
+            <div className="flex p-5">
+                <div className="flex-1 flex flex-col justify-center items-center">
+                    <Image
+                        src={"/books-dark.svg"}
+                        alt="books"
+                        height={300}
+                        width={300}
+                    />
+                    <a
+                        href={`/dashboard/assignments`}
                     >
-                        See assignments
-                    </Button>
-                </a>
+                        <Button
+                            className="w-full text-lg font-mono"
+                        >
+                            See assignments
+                        </Button>
+                    </a>
+                </div>
+                <div className="flex-1 flex flex-col justify-center items-center">
+                    <Users className="size-70 text-primary" />
+                    <a
+                        href={`/dashboard/members`}
+                    >
+                        <Button
+                            className="w-full text-lg font-mono"
+                        >
+                            See Members
+                        </Button>
+                    </a>
+                </div>
             </div>
         </div>
     )
