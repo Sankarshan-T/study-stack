@@ -60,21 +60,6 @@ export default async function AssignmentIdPage({
             ),
         });
 
-
-    const alreadyCompleted =
-        await db.query.assignmentCompletions.findFirst({
-            where: and(
-                eq(
-                    assignmentCompletions.assignmentId,
-                    id
-                ),
-                eq(
-                    assignmentCompletions.studentId,
-                    userId!
-                )
-            )
-        });
-
     const memberships =
         await client.organizations.getOrganizationMembershipList({
             organizationId: orgId!,
