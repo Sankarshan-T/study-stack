@@ -31,7 +31,7 @@ export function DeleteAssignment({
 
     return (
         <Dialog>
-            <DialogTrigger className="p-1 bg-red-800/10 hover:bg-red-800 text-red-800 border border-red-800 hover:text-white rounded-lg text-sm flex font-normal items-center gap-2" type="button">
+            <DialogTrigger className="p-1 bg-red-800/10 hover:bg-red-800 text-red-800 border border-red-800 hover:text-primary-foreground rounded-lg text-sm flex font-normal items-center gap-2" type="button">
                 <Trash2 className="h-4 w-4" />
                 Delete
             </DialogTrigger>
@@ -57,7 +57,7 @@ export function DeleteAssignment({
                         <Button
                             size={"sm"}
                             onClick={handleDelete}
-                            className="p-1 bg-red-800/10 hover:bg-red-800 text-red-800 border border-red-800 hover:text-white"
+                            className="p-1 bg-red-800/10 hover:bg-red-800 text-red-800 border border-red-800 hover:text-primary-foreground"
                         >
                             <Trash2 className="h-4 w-4" />
                             Delete
