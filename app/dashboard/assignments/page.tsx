@@ -70,7 +70,7 @@ export default async function AssignmentsPage() {
         : [];
 
     return (
-        <div className="h-full w-full p-6 flex flex-col gap-y-6">
+        <div className="h-full max-h-full w-full p-6 flex flex-col gap-y-6">
             <div className="flex items-center justify-between">
                 <h1 className="text-3xl font-bold text-primary">Assignments</h1>
                 {isTeacher && (
@@ -83,7 +83,7 @@ export default async function AssignmentsPage() {
             </div>
 
             {data.length !== 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-full overflow-auto">
                     {data.map((assignment) => {
                         const isCompleted = completedAssignmentIds.includes(
                             assignment.id
