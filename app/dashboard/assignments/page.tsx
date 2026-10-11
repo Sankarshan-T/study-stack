@@ -118,7 +118,7 @@ export default async function AssignmentsPage() {
 
                                     <div className="mt-auto pt-2">
                                         <p className="text-xs text-muted-foreground">
-                                            Due:{" "}
+                                            Due: {" "}
                                             <span className="font-semibold">
                                                 {new Date(
                                                     assignment.dueDate
@@ -129,17 +129,13 @@ export default async function AssignmentsPage() {
                                                 })}
                                             </span>
                                         </p>
+                                        <div className="mt-3 flex items-center justify-end text-sm font-medium text-primary">
+                                            Open Assignment
+                                            <span aria-hidden="true" className="ml-1">
+                                                →
+                                            </span>
+                                        </div>
                                     </div>
-
-                                    <Button
-                                        size="sm"
-                                        className="w-full mt-2 group-hover:bg-primary/90"
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                        }}
-                                    >
-                                        Open Assignment
-                                    </Button>
                                 </div>
                             </Link>
                         );
